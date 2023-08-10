@@ -4,6 +4,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
+import { Toaster, toast } from 'react-hot-toast';
 
 
 const LoginPage = () => {
@@ -31,10 +32,12 @@ const LoginPage = () => {
         const response = await axios.post('/api/users/login', user);
 
         console.log("Login successful", response.data);
+        toast.success("Login Success");
 
           router.push('/profile');
       } catch (error) {
         console.log("Login failed", error.message);
+        toast.error("Login Error");
       }
   };
 
@@ -66,6 +69,8 @@ const LoginPage = () => {
             <Link href='/signup' className='my-3'>
               visit SignUp Page
             </Link>
+
+            <Toaster />
   </div>
   )
 }
