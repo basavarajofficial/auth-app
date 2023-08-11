@@ -4,7 +4,9 @@ const UserProfile = ({params}) => {
   return (
     
     <div>
-        <h1>UserProfile {params.id}</h1>
+        <h1>UserProfile {params.id}
+      
+        </h1>
     </div>
   )
 }

@@ -4,6 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import Profile from "../components/Profile";
 
 const ProfilePage = () => {
   const router = useRouter();
@@ -33,7 +34,7 @@ const ProfilePage = () => {
       <br />
 
       <h1>{data === "Nothing" ? "Nothing" :
-        <Link href={`/profile/${data}`} >click here</Link>}</h1>
+        <Link href={`/profile/${data}`  } >click here to view you profile</Link>}</h1>
 
       <button className="bg-blue-500 text-xl p-2 rounded-md" onClick={logout}>
         Logout
@@ -42,6 +43,9 @@ const ProfilePage = () => {
       <button className="bg-orange-500 text-xl p-2 rounded-md" onClick={getUserDetails}>
         Your Profile
       </button>
+
+     
+
     </div>
   );
 };
