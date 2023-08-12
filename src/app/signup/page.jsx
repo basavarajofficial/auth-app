@@ -15,6 +15,7 @@ const SignUp = () => {
     username: ""
   });
 
+  const [Loading, setLoading] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
   useEffect(() => {
@@ -29,10 +30,12 @@ const SignUp = () => {
   const onSignUp = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const response = await axios.post('/api/users/signup', user);
 
       console.log("Signup successful", response.data);
         router.push('/login');
+
 
       
     } catch (error) {
@@ -46,7 +49,7 @@ const SignUp = () => {
 
   return (
     <form  className='flex flex-col justify-center items-center min-h-screen text-white py-2'>
-      <h1 className='blue_gradient text-3xl mb-5'>Sign up</h1>
+      <h1 className='blue_gradient text-3xl mb-5'> {Loading ? "Processing" : "Sign up"} </h1>
       <hr />
 
       <label htmlFor="username">UserName:</label>

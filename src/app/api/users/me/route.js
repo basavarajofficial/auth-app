@@ -18,6 +18,5 @@ export const GET = async (request) => {
         
     } catch (error) {
         return NextResponse.json({error: error.message}, {status: 400});
-        
     }
 }

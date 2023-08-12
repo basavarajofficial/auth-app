@@ -1,4 +1,5 @@
 import { connectToDB } from "@/dbConfig/dbConfig";
+import { sendEmail } from "@/helpers/mailer";
 import User from "@/models/userModel";
 import bcryptjs from 'bcryptjs'
 import jwt from "jsonwebtoken";
