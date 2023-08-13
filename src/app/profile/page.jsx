@@ -4,12 +4,13 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import Profile from "../components/Profile";
+import MyProfile from "../components/MyProfile";
 
 const ProfilePage = () => {
   const router = useRouter();
 
-  const [data, setData] = useState("Nothing");
+  const [id, setId] = useState("Nothing");
+  const [data, setData] = useState([]);
 
   const logout = async () => {
     try {
@@ -24,8 +25,9 @@ const ProfilePage = () => {
 
   const getUserDetails = async () => {
     const res = await axios.get("/api/users/me");
-    console.log(res.data);
-    setData(res.data.data._id);
+    // console.log(res.data);
+    setId(res.data.data._id);
+    setData(res.data.data);
   };
 
   return (
@@ -33,8 +35,8 @@ const ProfilePage = () => {
       <h1>ProfilePage</h1>
       <br />
 
-      <h1>{data === "Nothing" ? "Nothing" :
-        <Link href={`/profile/${data}`  } >click here to view you profile</Link>}</h1>
+      <h1>{id === "Nothing" ? "Nothing" :
+        <Link href={`/profile/${id}`  } >click here to view you profile</Link>}</h1>
 
       <button className="bg-blue-500 text-xl p-2 rounded-md" onClick={logout}>
         Logout
@@ -44,7 +46,9 @@ const ProfilePage = () => {
         Your Profile
       </button>
 
-     
+      <div className="bg-orange-500 text-xl p-2 rounded-md">
+        <MyProfile mydata={data} />
+      </div>
 
     </div>
   );

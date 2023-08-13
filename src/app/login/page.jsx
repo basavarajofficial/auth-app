@@ -29,12 +29,12 @@ const LoginPage = () => {
       const response = await axios.post("/api/users/login", user);
 
       console.log("Login successful", response.data);
-      toast.success("Login Success");
+      toast.success("Login Success!");
 
       router.push("/profile");
     } catch (error) {
       console.log("Login failed", error.message);
-      toast.error("Login Error");
+      toast.error("Please provide valid credentials", error.message);
     }
   };
 

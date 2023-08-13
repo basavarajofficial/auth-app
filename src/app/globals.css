@@ -40,3 +40,12 @@ body {
 .blue_gradient {
   @apply bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent;
 }
+
+
+.mytoast{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 100px;
+}
