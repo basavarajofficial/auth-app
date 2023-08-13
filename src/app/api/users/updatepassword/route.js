@@ -7,9 +7,10 @@ export const POST = async (request) => {
   try {
     await connectToDB();
     const reqBody = await request.json();
-    const { email, password } = reqBody;
+    const { password, forgotPasswordToken } = reqBody;
 
-    const user = await User.findOne({ email });
+
+    const user = await User.findOne({ forgotPasswordToken });
 
     console.log(user);
 
@@ -28,10 +29,19 @@ export const POST = async (request) => {
 
     console.log("updated successfully");
 
-    return NextResponse.json(
-      { message: "Password updated succefully", success: true, updatedUser },
-      { status: 200 }
-    );
+
+      user.forgotPasswordToken = undefined;
+      user.forgotPasswordTokenExpiry = undefined;
+      await user.save();
+
+      const response = NextResponse.json({
+        message: "Password Updated Successful",
+        success : true,
+    })
+
+    response.cookies.set("token", "", {httpOnly: true});
+
+    return response;
   } catch (error) {
     NextResponse.json({ message: error.message }, { status: 500 });
   }

@@ -1,9 +1,9 @@
 "use client";
 
 import axios from "axios";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { Toaster, toast } from "react-hot-toast";
 
 export default function VerifyEmailReset() {
   const router = useRouter();
@@ -13,14 +13,16 @@ export default function VerifyEmailReset() {
   const [error, setError] = useState(false);
 
   const [user, setUser] = useState({
-    email: "",
     password: "",
+    forgotPasswordToken: "",
   });
 
   const verifyUserEmail = async () => {
     try {
       await axios.post("/api/users/verifyemailpass", { token });
       setVerified(true);
+
+      user.forgotPasswordToken = token;
     } catch (error) {
       console.log(error);
       setError(true);
@@ -44,7 +46,11 @@ export default function VerifyEmailReset() {
       const res = await axios.post("api/users/updatepassword", user);
       console.log(res);
 
-      router.push("/login");
+      toast.success(res.data.message);
+
+      setTimeout(() => {
+        router.push("/login");
+      }, 3000);
     } catch (error) {
       console.log(error);
     }
@@ -63,15 +69,7 @@ export default function VerifyEmailReset() {
           </h2>
 
           <form className="flex flex-col items-start justify-start p-3 gap-2">
-            <label>Email :</label>
-            <input
-              className="inputs"
-              type="email"
-              id="email"
-              value={user.email}
-              placeholder="Enter your email"
-              onChange={(e) => setUser({ ...user, email: e.target.value })}
-            />
+            
 
             <label>New Password :</label>
             <input
@@ -95,6 +93,10 @@ export default function VerifyEmailReset() {
           <h2 className="text-2xl bg-red-500 text-black">Something Wrong!</h2>
         </div>
       )}
+
+
+
+      <Toaster />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import {  NextResponse } from "next/server";
 import User from "@/models/userModel";
 import { connectToDB } from "@/dbConfig/dbConfig";
+import { Cookie } from "next/font/google";
 
 connectToDB();
 
@@ -19,15 +20,18 @@ export async function POST(request){
         }
         console.log(user);
 
-        user.forgotPasswordToken = undefined;
-        user.forgotPasswordTokenExpiry = undefined;
-        await user.save();
+        user.forgotPasswordToken = token;
 
-        return NextResponse.json({
-            message: "Email verified for reset password successfully",
-            success: true
+        const response = NextResponse.json({
+            message: "Email verified successfully",
+            success : true,
         })
 
+        response.cookies.set("token", token, {httpOnly: true});
+
+        return response;
+
+        
 
     } catch (error) {
         return NextResponse.json({error: error.message}, {status: 500})
