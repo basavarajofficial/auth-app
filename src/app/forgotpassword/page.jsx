@@ -21,9 +21,10 @@ const ForgotPasswordPage = () => {
     try {
       setLoading(true)
       const response = await axios.post("/api/users/forgotpassword", user);
-      console.log("Email Found", response.data);
       setMyToast(true);
+      console.log("Email Found", response.data);
     } catch (error) {
+      setLoading(false);
       toast.error("Email Not Found!");
       throw new Error(error);
     }
@@ -39,10 +40,10 @@ const ForgotPasswordPage = () => {
         </div>
       ) : (
         <div className="flex flex-col justify-center items-center min-h-screen text-white py-2">
-          <h1 className="blue_gradient text-3xl mb-5">
-            {loading ? <div className="spinner"></div> : "Forgot Password ...?"} 
+          <h1 className="blue_gradient text-3xl mb-5">Forgot Password ...? </h1>
+            {loading && <div className="spinner"></div>} 
             
-            </h1>
+           
           <form className="flex flex-col items-start justify-start p-3 gap-2">
             <label htmlFor="email">Email:</label>
             <input
