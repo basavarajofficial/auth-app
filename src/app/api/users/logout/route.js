@@ -3,7 +3,7 @@ import { NextResponse } from "next/server"
 export const GET = () => {
     try {
         const response = NextResponse.json({
-            message: "Logout Successfully",
+            message: "Logged out Successfully",
             success: true
         })
 

@@ -15,6 +15,7 @@ const LoginPage = () => {
   });
 
   const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (user.email.length > 0 && user.password.length > 0) {
@@ -28,19 +29,21 @@ const LoginPage = () => {
     try {
       const response = await axios.post("/api/users/login", user);
 
-      console.log("Login successful", response.data);
+      setLoading(true);
       toast.success("Login Success!");
-
       router.push("/profile");
     } catch (error) {
-      console.log("Login failed", error.message);
-      toast.error("Please provide valid credentials", error.message);
+      console.log(error.response.data.error);
+      toast.error(error.response.data.error);
     }
   };
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen text-white py-2">
-      <h1 className="blue_gradient text-3xl mb-5">Login</h1>
+      <h1 className="blue_gradient text-3xl mb-5">
+        {loading ? <div className="spinner"></div> : "Login" } 
+      </h1>
+
       <hr />
 
       <label htmlFor="email">Email:</label>
@@ -69,7 +72,7 @@ const LoginPage = () => {
 
       <Link href="/forgotpassword">Forgot Password</Link>
 
-      <Link href="/signup" className="my-3">
+      <Link href="/signup" className='my-3 text-white rounded-xl p-2 border-2'>
         visit SignUp Page
       </Link>
 

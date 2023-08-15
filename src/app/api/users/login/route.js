@@ -1,5 +1,4 @@
 import { connectToDB } from "@/dbConfig/dbConfig";
-import { sendEmail } from "@/helpers/mailer";
 import User from "@/models/userModel";
 import bcryptjs from 'bcryptjs'
 import jwt from "jsonwebtoken";
@@ -21,7 +20,7 @@ export const POST = async (req) => {
         }
         
         if(!user.isVerified){
-            return NextResponse.json({error: "Did not verified your email"}, {status:400});
+            return NextResponse.json({error: "Your email is not verified yet!"}, {status:400});
         }
 
         // check password is correct

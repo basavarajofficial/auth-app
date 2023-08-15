@@ -1,6 +1,7 @@
 "use client";
 
 import axios from "axios";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
@@ -12,14 +13,15 @@ const ForgotPasswordPage = () => {
     email: "",
   });
 
+  const [loading, setLoading] = useState(false);
   const [myToast, setMyToast] = useState(false);
 
   const onForgotEmailVerify = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true)
       const response = await axios.post("/api/users/forgotpassword", user);
       console.log("Email Found", response.data);
-
       setMyToast(true);
     } catch (error) {
       toast.error("Email Not Found!");
@@ -37,6 +39,10 @@ const ForgotPasswordPage = () => {
         </div>
       ) : (
         <div className="flex flex-col justify-center items-center min-h-screen text-white py-2">
+          <h1 className="blue_gradient text-3xl mb-5">
+            {loading ? <div className="spinner"></div> : "Forgot Password ...?"} 
+            
+            </h1>
           <form className="flex flex-col items-start justify-start p-3 gap-2">
             <label htmlFor="email">Email:</label>
             <input
@@ -52,23 +58,13 @@ const ForgotPasswordPage = () => {
               Submit
             </button>
           </form>
+            <Link href='/login' className='login my-3'>
+                visit login Page
+              </Link>
         </div>
       )}
 
-      <Toaster
-        toastOptions={{
-          // Define default options
-          className: "mytoast",
-          duration: 5000,
-          style: {
-            background: "yellow",
-            color: "#333",
-          },
-          success: {
-            duration: 5000
-          }
-        }}
-      />
+      <Toaster />
     </div>
   );
 };
